@@ -16,17 +16,17 @@ class CStudent{
 };
 
 
-int main()
+int main(int argc, char  *argv[])
 {
     CStudent S;
-    ifstream inFile("1.dat",ios::in|ios::binary);
+    ifstream inFile(argv[1],ios::in|ios::binary);
     if(!inFile){
         cout << "error" <<endl;
         return 0;
     }
     while(inFile.read((char *)&S,sizeof(S))){
         int  nReadBytes = inFile.gcount(); // 看看刚才读了多少个字节
-        cout << S.name << "" << S.score <<endl;
+        cout << S.name << ""<< nReadBytes <<"---" << S.score <<endl;
     }
     inFile.close();
     return 0;

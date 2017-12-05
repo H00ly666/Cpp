@@ -26,6 +26,7 @@ int main()
         if(strcmp(S.name,"exit") == 0)
             break;
         Outfile.write((char*)&S,sizeof(S));  //向里边写数据char*引用,字节数long  unsigned
+        
     }
     Outfile.close();//关文件
     return 0;
