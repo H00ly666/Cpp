@@ -9,8 +9,7 @@
 using namespace std;
 int main ()
 {
-    int  ia[4] = {1,2,3,:x
-                  4};
+    int  ia[4] = {1,2,3,4};
     using int_arry = int[4];
     typedef int  int_arry[4];
 
@@ -20,6 +19,4 @@ int main ()
     cout<< endl;
 
     }
-
-
 }

@@ -7,16 +7,30 @@
 
 #include<iostream>
 using namespace std;
+class  App
+{
+    int&a;
+    int&b;
+};
 void swap(int  &a ,int  &b)
 {
     int  temp;
     temp = a;a =b ;b =temp;
 }
-
+int  &max(int& a,int& b)
+{
+    return a>b?a:b;
+}
 
 int main()
 {
     int a=4,b=3;
+    App  h;
     swap(a,b);
-    printf("%d %d\n",a,b );
+    cout<< h.a<<endl;
+    
+    cout << &a << "  " <<&b <<endl;
+    cout<< max(a,b)<<endl;
+
+    cout << &max(a,b)<< sizeof(A) <<endl;
 }
