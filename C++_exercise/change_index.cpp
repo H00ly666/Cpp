@@ -1,12 +1,12 @@
 /*************************************************************************
 	> File Name: change_index.cpp
-	> Author: 
+	> Author: 刘怪怪 
 	> Mail: 
 	> Created Time: 2017年12月11日 星期一 18时08分17秒
  ************************************************************************/
 
 #include<iostream>
-#include<string>
+#include<cstring>
 #include<cstdlib>
 using namespace std;
 
@@ -15,10 +15,10 @@ class CArray {
         int  *ptr;//指向动态分配的数组
     public:
         CArray(int s=0);//s代表数组元素的个数  普通构造函数
-        CArray(CArray &a); //复支？   赋值构造函数
+        CArray(CArray &a); //   赋值构造函数
         ~CArray();
         void push_back(int v);//用于在数组尾部添加一个元素v
-        CArray &operator=(const CArray &a);
+        CArray & operator = (const CArray &a);
         //用于数组对象间的赋值
         int length() {return size;}//返回数组元素的个数
         int&  operator [](int  i )
@@ -26,14 +26,14 @@ class CArray {
             return  ptr[i];
         }
 };
-CArray::CArray(int s):size(s)
+CArray::CArray(int s):size(s)  //列表初始化  有const时要注意
 {
     if(s==0)
         ptr = NULL;
-   else
+    else
         ptr = new int[s];
 }
-CArray::CArray(CArray &a)
+CArray::CArray(CArray &a)  //括号
 {
     if(!a.ptr){
         ptr = NULL;
@@ -41,35 +41,34 @@ CArray::CArray(CArray &a)
         return;
     }
     ptr = new int[a.size];
-    memcpy(ptr,a.ptr,sizeof(int)*a.size);
+    memcpy(ptr ,a.ptr ,sizeof(int)*a.size);
     size = a.size;
 }
+//析构函数
 CArray::~CArray()
 {
     if(ptr) delete[] ptr;
 }
-CArray &CArray::operator = (const CArray &a)
+CArray &  CArray::operator = (const CArray &a)
 {//赋值号的作用是使“=”左边对象里存放的数组，大小和内容都和右边的对象都一样
     if(ptr==a.ptr)
         return *this;
     if(a.ptr==NULL){//如果a里数组为空
-        if(ptr) delete []ptr;
+        if(ptr) 
+            delete []ptr;     //new 和 delete、new[] 和 delete[] 对应使用。
         ptr = NULL;
         size = 0;
         return *this;
     }
     if(size <a.size){
-     if(ptr)
-        delete[] ptr;
-     ptr= new int[a.size];
+        if(ptr)
+            delete[] ptr;
+        ptr= new int[a.size];
     }
-    memcpy(ptr,a.ptr,sizeof(int)*a.size);
+    memcpy(ptr,a.ptr,sizeof(int)*a.size);    //cstring 头文件
     size = a.size;
     return *this;
 }
-
-
-
 void CArray::push_back(int v)
 {
     if(ptr){
