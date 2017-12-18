@@ -6,17 +6,21 @@
  ************************************************************************/
 
 #include<iostream>
+#include<string>
 using namespace std;
 int main ()
 {
-    string s("Hello world ！");
+    string s("Hello world !");
    // decltype(s.size()) punct_cnt =0;
    // int  punct_cnt;    //特别大的值是怎么肥事
-    for  (auto c : s){  // 自动轮寻
-        if (ispunct(c))
-            ++punct_cnt;
-    }
-    cout <<punct_cnt 
-         << "punctuation characters in "<< s <<endl;
-
+//    for  (auto c : s){  // 自动轮寻
+//        if (ispunct(c))
+//            ++punct_cnt;
+//    }
+//    cout <<punct_cnt 
+//         << "punctuation characters in "<< s <<endl;
+//
+    s = "nihao";
+    string s1;
+    cout <<s1 <<sizeof(s) << "\0"<< s.size()  << "  "<<s<<endl;
 }
