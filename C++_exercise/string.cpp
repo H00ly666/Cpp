@@ -20,26 +20,29 @@ using namespace std;
 
 class my_String
 {
-    int size1;   //字符个数
-    char *ptr;  //指向这个字符串
-    friend ostream& operator<<(ostream& os,my_String& str);
-    friend istream& operator>>(istream& os,my_String& str);
     public:
-       // explicit my_String(const char  *otr);   //显式构造
+        int size1;   //字符个数
+        char *ptr;  //指向这个字符串
+        friend ostream& operator<<(ostream& os,my_String& str);
+        friend istream& operator>>(istream& os,my_String& str);
+        // explicit my_String(const char  *otr);   //显式构造
+        my_String();    
         my_String(const char *otr) ;   //隐式构造
         my_String(const my_String & str);
         my_String(int h ,char a);
         ~my_String() {if(ptr) delete []ptr;  }
         int size() const {return  size1;}
-        char & operator [] (int i )  //重载[]
-        {
-            return ptr[i];
-        }
+        char & operator [] (int i )  {return ptr[i];} //
         my_String & operator = (  my_String &str); // 重载 = 
-       // my_String & operator = ( char *str);
-
+        // size_t find1(char c);
+        size_t find1(char c , size_t k=0) ; //利用好缺省
+        size_t find1(char* str, size_t k = 1);
+        size_t find1(my_String &str, size_t k=1);
 };
-
+my_String::my_String():size1(0)
+{
+    ptr = NULL;    
+}
 my_String::my_String(const  char  *otr):size1(strlen(otr))  //可做默认构造函数　　或　my_string(“hhhh”);
 {
     if(!otr) {
@@ -47,7 +50,6 @@ my_String::my_String(const  char  *otr):size1(strlen(otr))  //可做默认构造
     }else{
         ptr =  new char[size1 + 1];
         memcpy( ptr ,otr,size1 + 1);
-       // ptr[size1] = '\0';
     }
 }
 
@@ -58,7 +60,6 @@ my_String::my_String(const my_String &str):size1(str.size())
     else{
         ptr =  new char [size1 + 1];
         memcpy(ptr, str.ptr, size1+1);
-       // ptr[size1] = '\0';
     }
 }
 
@@ -80,19 +81,8 @@ my_String& my_String::operator = ( my_String &str)
     size1 = strlen(str.ptr);
     ptr  = new char[size1 + 1]; 
     memcpy(ptr,str.ptr,size1+1); 
-    
     return *this;
 }
-//重载＝ my_String a = "1234";
-/*
-my_String& my_String::operator = ( char * str)
-{
-    size1 = strlen(str);
-    ptr  = new char[size1 + 1]; 
-    memcpy(ptr,str,size1+1); 
- 
-    return *this;
-}*/
 ostream& operator << (ostream& os,my_String& mtr)  //重载运算符<<   
 {  
     os << mtr.ptr;  
@@ -100,13 +90,72 @@ ostream& operator << (ostream& os,my_String& mtr)  //重载运算符<<
 } 
 istream& operator >> (istream& os,my_String& str)
 {
-    char temp[255]
+    char temp[255];
     cin >> temp;
-    
+    str.size1 = strlen(temp);
+    str.ptr = new char[str.size1+1];
+    memcpy(str.ptr , temp, str.size1);
     return os;
 }
-int main ()
+//成员函数重载
+/*
+size_t  my_String::find1 (char c)
 {
+    size_t  i =0;
+    for(i=0 ; i< size1;i++){
+        if(ptr[i] == c)
+            return  i;
+    }
+    if(i == size1)
+        return -1 ;
+}*/
+size_t my_String::find1(char c, size_t  k)
+{
+    if(k <0)
+        return -1;
+    size_t  i = k;
+    for(i ; i< size1;i++){
+        if(ptr[i] == c)
+            return  i;
+    }
+    if(i == size1)
+        return -1 ; 
+}
+size_t my_String::find1(char *str,size_t k)
+{
+    size_t size =strlen(str);
+    if(k > size1 || size > size1)
+        return -1;
+    char *otr = new char[size1-size+1];
+    
+    memcpy(otr ,ptr+k-1,size1-k+1 );
+    
+    char *p = strstr(otr,str);
+    cout << otr << endl;
+    size = p-otr+k-1;
+    delete []otr;
+    return  size;
+}
+
+size_t my_String::find1(my_String &str, size_t k)
+{
+    int size =strlen(str.ptr);
+    if(k > size1)
+        return -1;
+    char *otr = new char[size1-size+1];
+    memcpy(otr ,ptr+k,size1-k+1);
+    char *p = strstr(otr,str.ptr);
+    
+    cout  << otr << " "<< p << endl;
+    if(p == NULL)
+        return -1;
+    size = p-otr+k;
+    delete []otr;
+    return  size;
+}
+
+int main ()
+{/*
     char  *a = (char*)"helloworld";
    // my_String s  ("hello world");
     my_String s(a);
@@ -114,7 +163,15 @@ int main ()
     my_String b = "12345";// 隐式构造
     cout << b.size() <<  b << endl;
     my_String h;
-    cin >> h;
-    cout<<h<<endl;
+    cin >> h ;
+    cout<< h <<endl;
+*/
+    my_String a("helloworld");
+    my_String b("wor");
+    cout<< a.find1(b,5)<<endl;
+ 
+ 
+    
+
 
 }
