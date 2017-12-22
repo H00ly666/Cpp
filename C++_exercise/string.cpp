@@ -32,12 +32,18 @@ class my_String
         my_String(int h ,char a);
         ~my_String() {if(ptr) delete []ptr;  }
         int size() const {return  size1;}
+        //运算符重载 
         char & operator [] (int i )  {return ptr[i];} //
-        my_String & operator = (  my_String &str); // 重载 = 
-        // size_t find1(char c);
+        my_String & operator = (my_String &str); // 重载 = 
+        my_String & operator + (const my_String& str)  ;
+      // my_String & operator += (my_String &str);
+        //函数重载
         size_t find1(char c , size_t k=0) ; //利用好缺省
         size_t find1(char* str, size_t k = 1);
         size_t find1(my_String &str, size_t k=1);
+
+
+
 };
 my_String::my_String():size1(0)
 {
@@ -78,10 +84,37 @@ my_String::my_String(int h, char a):size1(h)
 //重载= my_String a = b;
 my_String& my_String::operator = ( my_String &str)
 {
-    size1 = strlen(str.ptr);
-    ptr  = new char[size1 + 1]; 
-    memcpy(ptr,str.ptr,size1+1); 
+    if(str.ptr == NULL){
+        size1 = 0;
+        ptr = NULL;
+    }else if (ptr ==NULL){
+        size1 = strlen(str.ptr);
+        ptr = new char [size1+1];
+        memcpy(ptr, str.ptr,size1+1 );
+    }else{
+        delete []ptr;
+        size1 = strlen(str.ptr);
+        ptr = new char [size1+1];
+        memcpy(ptr, str.ptr,size1+1 );
+    }
     return *this;
+}
+my_String& my_String::operator + (const my_String &str)   // a.operator + (b)
+{
+    my_String* newstring =new my_String;
+    if (!str.ptr){
+         newstring->ptr = str;
+        newstring->size1 = size1;
+    }else if (!ptr){
+         newstring->  = str;
+    }else{
+        newstring;
+        newstring.ptr = new char[size1+str.size1+1];
+        memcpy(newstring.ptr ,ptr ,size1 );
+        strcat(newstring.ptr , str.ptr );
+        newstring.size1 = size1+str.size1;
+    }  
+    return newstring;
 }
 ostream& operator << (ostream& os,my_String& mtr)  //重载运算符<<   
 {  
@@ -168,7 +201,9 @@ int main ()
 */
     my_String a("helloworld");
     my_String b("wor");
-    cout<< a.find1(b,5)<<endl;
+   my_String h;
+    h= a+b;
+    cout<< a.find1(b,5)<< h <<endl;
  
  
     
