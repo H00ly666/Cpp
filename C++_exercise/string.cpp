@@ -41,7 +41,7 @@ class my_String
         size_t find1(char c , size_t k=0) ; //利用好缺省
         size_t find1(char* str, size_t k = 1);
         size_t find1(my_String &str, size_t k=1);
-
+        //bool empty( ,  ,);
 
 
 };
@@ -74,13 +74,12 @@ my_String::my_String(int h, char a):size1(h)
     if(h > 0 ){
         ptr = new  char[h+1];
         for(int  i =0;i<h;i++)
-            ptr[i] = a;
+        ptr[i] = a;
         ptr[h] = '\0';
     }else{
         ptr = NULL;
     }
 }
-
 //重载= my_String a = b;
 my_String& my_String::operator = ( my_String &str)
 {
