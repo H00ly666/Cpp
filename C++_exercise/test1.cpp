@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: test.cpp
+	> File Name: test1.cpp
 	> Author: 刘怪怪
 	> Mail: 
-	> Created Time: 2017年12月21日 星期四 17时43分39秒
+	> Created Time: 2017年12月26日 星期二 12时31分44秒
  ************************************************************************/
 
 #include<iostream>
@@ -15,11 +15,11 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<stdio.h>
-#include<string>
+#include<string.h>
 using namespace std;
-int main()
+int   main()
 {
-    string h("hello");
-    cout << h.size()<<h.find("");
-    
+    const string a;
+    cin >> a;
+
 }

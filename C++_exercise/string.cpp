@@ -33,18 +33,18 @@ class my_String
         ~my_String() {if(ptr) delete []ptr;  }
         int size() const {return  size1;}
         //运算符重载 
-        char & operator [] (int i )  {return ptr[i];} //
-        my_String & operator = (my_String &str); // 重载 = 
-        my_String & operator + (const my_String& str)  ;
-      // my_String & operator += (my_String &str);
+        inline char & operator [] (int i )  {return ptr[i];} //
+        my_String & operator = (const my_String &str); // 重载 = 
+        my_String operator + (const my_String& str);
+        bool  operator == (my_String &str);    
+        my_String & operator += (my_String &str);
         //函数重载
         size_t find1(char c , size_t k=0) ; //利用好缺省
         size_t find1(char* str, size_t k = 1);
         size_t find1(my_String &str, size_t k=1);
-        //bool empty( ,  ,);
-
-
+        bool empty();
 };
+        
 my_String::my_String():size1(0)
 {
     ptr = NULL;    
@@ -81,39 +81,64 @@ my_String::my_String(int h, char a):size1(h)
     }
 }
 //重载= my_String a = b;
-my_String& my_String::operator = ( my_String &str)
+my_String& my_String::operator = (const my_String &str)
 {
-    if(str.ptr == NULL){
-        size1 = 0;
-        ptr = NULL;
-    }else if (ptr ==NULL){
-        size1 = strlen(str.ptr);
-        ptr = new char [size1+1];
-        memcpy(ptr, str.ptr,size1+1 );
-    }else{
-        delete []ptr;
-        size1 = strlen(str.ptr);
-        ptr = new char [size1+1];
-        memcpy(ptr, str.ptr,size1+1 );
-    }
+    if (this!=&str) //排除复制本身   
+    {  
+        delete[] ptr;  
+        if(!str.size1) size1=0; //为空  
+        else  
+        {  
+            size1 = strlen(str.ptr);
+            ptr = new char[strlen(str.ptr)+1];  
+            strcpy(ptr,str.ptr);  
+        }  
+    }  
     return *this;
 }
-my_String& my_String::operator + (const my_String &str)   // a.operator + (b)
+my_String my_String::operator + (const my_String &str)   // a.operator + (b)
 {
-    my_String* newstring =new my_String;
-    if (!str.ptr){
-         newstring->ptr = str;
-        newstring->size1 = size1;
-    }else if (!ptr){
-         newstring->  = str;
-    }else{
-        newstring;
-        newstring.ptr = new char[size1+str.size1+1];
-        memcpy(newstring.ptr ,ptr ,size1 );
-        strcat(newstring.ptr , str.ptr );
-        newstring.size1 = size1+str.size1;
-    }  
-    return newstring;
+    if(!str.size1 || !str.size1&&!size1 )
+        return *this;
+    else if(!size1)
+        return str;
+    else{
+        my_String temp;
+        temp.size1 = size1 +str.size1;
+        temp.ptr = new char[temp.size1+1];
+        strcpy( temp.ptr, ptr );
+        strcat(temp.ptr , str.ptr);
+        temp.ptr[temp.size1] = '\0';
+        return temp;
+    }
+}
+my_String & my_String:: operator += (my_String &str)
+{
+    if(!str.size1 || !str.size1&&!size1 )
+        return *this;
+    else if(!size1){
+        size1 = str.size1;
+        ptr = new char[size1+1];
+        memcpy(ptr,str.ptr ,size1+1);
+        return *this;
+    }
+    else{
+        char *temp = new char [size1+1];
+        memcpy(temp ,ptr,size1+1); 
+        size1 = size1 + str.size1;
+        ptr = new char[size1+1];
+        memcpy(ptr ,temp ,strlen(temp));
+        memcpy(ptr+strlen(temp) ,str.ptr , str.size1+1);
+        cout << ptr <<  endl;
+    
+    }
+}
+
+bool my_String::operator == (my_String &str)
+{
+    if (size1 != str.size1)  
+        return false;  
+    return strcmp(str.ptr, ptr)?false:true;  
 }
 ostream& operator << (ostream& os,my_String& mtr)  //重载运算符<<   
 {  
@@ -130,17 +155,6 @@ istream& operator >> (istream& os,my_String& str)
     return os;
 }
 //成员函数重载
-/*
-size_t  my_String::find1 (char c)
-{
-    size_t  i =0;
-    for(i=0 ; i< size1;i++){
-        if(ptr[i] == c)
-            return  i;
-    }
-    if(i == size1)
-        return -1 ;
-}*/
 size_t my_String::find1(char c, size_t  k)
 {
     if(k <0)
@@ -159,16 +173,13 @@ size_t my_String::find1(char *str,size_t k)
     if(k > size1 || size > size1)
         return -1;
     char *otr = new char[size1-size+1];
-    
     memcpy(otr ,ptr+k-1,size1-k+1 );
-    
     char *p = strstr(otr,str);
     cout << otr << endl;
     size = p-otr+k-1;
     delete []otr;
     return  size;
 }
-
 size_t my_String::find1(my_String &str, size_t k)
 {
     int size =strlen(str.ptr);
@@ -185,27 +196,15 @@ size_t my_String::find1(my_String &str, size_t k)
     delete []otr;
     return  size;
 }
-
+bool my_String::empty()
+{
+    return  (size1 == 0)?1:0; 
+}
 int main ()
-{/*
-    char  *a = (char*)"helloworld";
-   // my_String s  ("hello world");
-    my_String s(a);
-    // my_String b = my_String("12345");   //重载 =  //显式构造　　
-    my_String b = "12345";// 隐式构造
-    cout << b.size() <<  b << endl;
-    my_String h;
-    cin >> h ;
-    cout<< h <<endl;
-*/
-    my_String a("helloworld");
-    my_String b("wor");
-   my_String h;
-    h= a+b;
-    cout<< a.find1(b,5)<< h <<endl;
- 
- 
-    
-
-
+{
+    my_String h("hello");
+    my_String w("world");
+    my_String a;
+    h += w;
+    cout << h.empty()  << h.size1 <<endl;
 }

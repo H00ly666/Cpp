@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: test.cpp
+	> File Name: testmystring.cpp
 	> Author: 刘怪怪
 	> Mail: 
-	> Created Time: 2017年12月21日 星期四 17时43分39秒
+	> Created Time: 2017年12月25日 星期一 18时40分39秒
  ************************************************************************/
 
 #include<iostream>
@@ -15,11 +15,18 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<stdio.h>
-#include<string>
+#include<string.h>
 using namespace std;
+
+#include "mystring.h"
+
 int main()
 {
-    string h("hello");
-    cout << h.size()<<h.find("");
-    
+    my_String a("helloworld");
+    my_String b("gaogaogao");
+    my_String h;
+    h=a+b;
+    a+=b;
+   // cout<< a+=b  <<endl;
+    cout << a;
 }
