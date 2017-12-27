@@ -17,9 +17,19 @@
 #include<stdio.h>
 #include<string>
 using namespace std;
+class test{
+    int  num;
+    friend void  print(test &t);
+public:
+    test(int n){num = n; }
+};
+void print(test &t)
+{
+    cout<< num;0
+}
+
 int main()
 {
-    string h("hello");
-    cout << h.size()<<h.find("");
+    test a(5);
     
 }
