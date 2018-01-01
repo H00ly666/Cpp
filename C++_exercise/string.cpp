@@ -23,7 +23,6 @@ class my_String
     public:
         int size1;   //字符个数
         char *ptr;  //指向这个字符串
-        friend ostream& operator<<(ostream& os,my_String& str);
         friend istream& operator>>(istream& os,my_String& str);
         // explicit my_String(const char  *otr);   //显式构造
         my_String();    
@@ -202,6 +201,7 @@ bool my_String::empty()
 }
 int main ()
 {
+    my_String b = "123";
     my_String h("hello");
     my_String w("world");
     my_String a;
