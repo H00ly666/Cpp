@@ -26,7 +26,7 @@ int main(int argc, char  *argv[])
     }
     while(inFile.read((char *)&S,sizeof(S))){
         int  nReadBytes = inFile.gcount(); // 看看刚才读了多少个字节
-        cout << S.name << ""<< nReadBytes <<"---" << S.score <<endl;
+        cout << S.name  << " " << S.score << nReadBytes <<"---"  <<endl;
     }
     inFile.close();
     return 0;
