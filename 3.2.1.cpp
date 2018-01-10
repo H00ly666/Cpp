@@ -16,6 +16,9 @@ int main()
     string s4("hello");
     
     cin  >> s1;
+    vin 发来开会呢
+     fadf faf地方
+    adf adsf
     cout << s1 << endl;
         
     while (cin >> s0 )
