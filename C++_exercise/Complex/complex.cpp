@@ -38,7 +38,8 @@ public:
     double hh() const  { return re ;}
     double real () const { return re; }
     double imag () const { return im; }
-
+    
+    ~complex();
 private:
     double re, im;
 
@@ -51,4 +52,12 @@ int main()
 {
     const complex c1(2,1);
     cout << c1.hh() ;
+    
+    complex *p = new complex[3]; 
+    /*
+     * array new  一定要搭配array delete 
+     *
+     */
+    delete[] p; //唤起3次析构函数 不加[]  只有一次 
+
 }

@@ -11,15 +11,15 @@ using namespace std;
 class A{
 public:
     static A& getInstanse();
-    setup() { ... }
+    void  setup() { cout <<"hello  Singleton!" <<  endl; }
 
 private:
     A();
-    A(const A& rhs);
-    ...
+    A(const A& ths);
 };
 
-A& A::getInstanse()
+inline A&
+A::getInstanse()
 {
     static A a;
     return a;
