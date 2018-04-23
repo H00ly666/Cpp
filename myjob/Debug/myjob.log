@@ -1,0 +1,4 @@
+﻿  myjob.cpp
+f:\joblabx\myjob\myjob.cpp(22): warning C4244: “参数”: 从“std::streamoff”转换到“unsigned int”，可能丢失数据
+  myjob.vcxproj -> F:\joblabx\myjob\Debug\myjob.exe
+  myjob.vcxproj -> F:\joblabx\myjob\Debug\myjob.pdb (Full PDB)
